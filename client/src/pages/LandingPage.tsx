@@ -5,7 +5,7 @@ const LandingPage: React.FC = () => {
     return (
         <div
             style={{
-                background: "#f2f2f2",
+                background: `var(--color-gray1)`,
                 overflowY: "auto",
                 height: "100vh",
                 padding: "0 20px 20px 20px",
@@ -14,25 +14,22 @@ const LandingPage: React.FC = () => {
             <div
                 style={{
                     backgroundColor: "white",
-                    backgroundSize: "cover",
                     position: "relative",
-                    userSelect: "none",
                     paddingTop: "20px",
                     paddingLeft: "30px",
                     paddingBottom: "10px",
                     paddingRight: "50px",
-                    borderRadius: "0 0 32px 32px",
-                    overflow: "hidden"
+                    borderRadius: "0 0 32px 32px"
                 }}
             >
                 <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                 >
                     <Typography
-                        variant="h6"
+                        variant="h5"
                         component="div"
                         fontWeight="bold"
-                        sx={{ position: "relative", color: "#ff335f" }}
+                        sx={{ position: "relative", color: "var(--color-pink1)" }}
                     >
                         ScheduleIT
                     </Typography>
@@ -56,7 +53,7 @@ const LandingPage: React.FC = () => {
                 >
                     <Typography
                         variant="body2"
-                        color="#ff335f"
+                        color="var(--color-pink1)"
                         sx={{ paddingLeft: "20px" }}
                     >
                         Suggested Businesses
@@ -65,10 +62,8 @@ const LandingPage: React.FC = () => {
                     <Box
                         style={{
                             position: "relative",
-                            zIndex: "2",
                             display: "flex",
                             flexDirection: "column",
-                            flexGrow: "1",
                             padding: "24px 24px 24px",
                             backgroundColor: "white",
                             borderRadius: "32px 32px 32px 32px",
@@ -95,7 +90,7 @@ const LandingPage: React.FC = () => {
                                     sx={{
                                         position: "relative",
                                         overflow: "hidden",
-                                        backgroundColor: "#f2f2f2",
+                                        backgroundColor: "var(--color-gray1)",
                                         borderRadius: "18px",
                                         height: "100%",
                                     }}
@@ -107,7 +102,7 @@ const LandingPage: React.FC = () => {
                                             alignItems: "center",
                                             minHeight: "200px",
                                             padding: "10px 10px 10px",
-                                            backgroundColor: "#5f8cd9",
+                                            backgroundColor: "var(--color-blue1)",
                                             backgroundRepeat: "no-repeat",
                                             backgroundSize: "cover",
                                             backgroundPosition: "center",
@@ -135,7 +130,7 @@ const LandingPage: React.FC = () => {
                                             variant="h6"
                                             fontWeight="bold"
                                             component="div"
-                                            color="#ff335f"
+                                            color="var(--color-pink1)"
                                             sx={{ mb: 0 }}
                                         >
                                             Business Name
