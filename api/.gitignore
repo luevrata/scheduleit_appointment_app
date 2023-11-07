@@ -5,7 +5,10 @@
 local-start.sh
 
 # packages
-package.json
+#package.json
+package-lock.json
 
 # dependencies
-/node_modules
+node_modules
+
+.idea
