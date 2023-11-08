@@ -144,7 +144,7 @@ INSERT ALL
     INTO specialist (specialistID, email, rating, specialistName) VALUES (102, 'kaydensanchez@hotmail.com', 4.6, 'Kayden Sanchez')
     INTO specialist (specialistID, email, rating, specialistName) VALUES (103, 'cobyliu@outlook.com', 2.7, 'Coby Liu')
     INTO specialist (specialistID, email, rating, specialistName) VALUES (104, 'david_wang1@business.com', 1.5, 'David Wang')
-SELECT 1 FROM DUAL;
+SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
     INTO service (serviceName) VALUES ('Manicure')
@@ -152,7 +152,7 @@ INSERT ALL
     INTO service (serviceName) VALUES ('Physiotherapy')
     INTO service (serviceName) VALUES ('Haircut')
     INTO service (serviceName) VALUES ('Make-up')
-SELECT 1 FROM DUAL;
+SELECT 1 FROM DUAL COMMIT;
     
 INSERT ALL
     INTO business (businessID, businessName) VALUES (1234, 'ACME Salon')
@@ -160,7 +160,7 @@ INSERT ALL
     INTO business (businessID, businessName) VALUES (1057, 'The Barber Shop')
     INTO business (businessID, businessName) VALUES (9384, 'Smile Thai Wellness')
     INTO business (businessID, businessName) VALUES (8888, 'Sephora Mac Salon')
-SELECT 1 FROM DUAL;
+SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
     INTO customer (userID, customerName, phoneNo, email) VALUES (1, 'phillip chariot', '123-435-1239', 'philipchariot@gmail.com')
@@ -168,7 +168,7 @@ INSERT ALL
     INTO customer (userID, customerName, phoneNo, email) VALUES (3, 'alejandro mexico', '213-489-1293', 'am@gmail.com')
     INTO customer (userID, customerName, phoneNo, email) VALUES (4, 'lipa dua', '213-423-4823', 'dualipa@gmail.com')
     INTO customer (userID, customerName, phoneNo, email) VALUES (5, 'chess crackers', '123-483-9123', 'cc@gmail.com')
-SELECT 1 FROM DUAL;
+SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
     INTO branch (branchID, businessID, branchName, branchAddress, phoneNo, email) VALUES  (1, 1234, 'East Vancouver ACME Salon', '215 Tolmie St', '123-456-7899', 'Eastvanacme@gmail.com') 
@@ -176,7 +176,7 @@ INSERT ALL
     INTO branch (branchID, businessID, branchName, branchAddress, phoneNo, email) VALUES  (1, 1057, 'The Barber Shop LLoydmaster', '5612 44 St', '123-543-5673', 'thebarbershop@gmail.com' ) 
     INTO branch (branchID, businessID, branchName, branchAddress, phoneNo, email) VALUES  (1, 5678, 'Smile Thai Kelowna', '1567 Pandosy St', '341-435-1235', 'Smilethaikelowna@yahoo.com') 
     INTO branch (branchID, businessID, branchName, branchAddress, phoneNo, email) VALUES  (1, 8888, 'Sephora Bromont', '229 de Bromont Boul', '214-543-5673', 'sephora@bromont.com')
-SELECT 1 FROM DUAL
+SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID) VALUES (1, 'james Doe', '111-111-1118', 'jamesdoe@hotmail.com', 1, 1234)
@@ -192,7 +192,7 @@ INSERT ALL
     INTO specialist_timeslot_location (startDate, specialistID, branchID, businessID) VALUES ((TO_DATE('01-08-2023 11:30', 'DD-MM-YYYY HH24:MI')), 102, 1, 1234)
     INTO specialist_timeslot_location (startDate, specialistID, branchID, businessID) VALUES ((TO_DATE('01-08-2023 10:30', 'DD-MM-YYYY HH24:MI')), 103, 2, 1234)
     INTO specialist_timeslot_location (startDate, specialistID, branchID, businessID) VALUES ((TO_DATE('09-07-2023 11:30', 'DD-MM-YYYY HH24:MI')), 103, 1, 5678)
-SELECT 1 FROM DUAL
+SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
     INTO specialist_timeslot_customer (startDate, specialistID, userID) VALUES ((TO_DATE('17-12-2023 13:30', 'DD-MM-YYYY HH24:MI')), 100, 1)
@@ -200,7 +200,7 @@ INSERT ALL
     INTO specialist_timeslot_customer (startDate, specialistID, userID) VALUES ((TO_DATE('01-08-2023 11:30', 'DD-MM-YYYY HH24:MI')), 102, 1)
     INTO specialist_timeslot_customer (startDate, specialistID, userID) VALUES ((TO_DATE('01-08-2023 10:30', 'DD-MM-YYYY HH24:MI')), 103, 4)
     INTO specialist_timeslot_customer (startDate, specialistID, userID) VALUES ((TO_DATE('09-07-2023 11:30', 'DD-MM-YYYY HH24:MI')), 104, 5)
-SELECT 1 FROM DUAL
+SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
     INTO user_payment_method (userID, paymentDate, method) VALUES (1, (TO_DATE('17-12-2023 14:38', 'DD-MM-YYYY HH24:MI')), 'Cash')
@@ -208,15 +208,15 @@ INSERT ALL
     INTO user_payment_method (userID, paymentDate, method) VALUES (1, (TO_DATE('01-08-2023 12:32', 'DD-MM-YYYY HH24:MI')), 'Credit')
     INTO user_payment_method (userID, paymentDate, method) VALUES (4, (TO_DATE('03/08/2023 10:30', 'DD-MM-YYYY HH24:MI')), 'E-Transfer')
     INTO user_payment_method (userID, paymentDate, method) VALUES (5, (TO_DATE('11/07/2023 14:11', 'DD-MM-YYYY HH24:MI')), 'Credit')
-SELECT 1 FROM DUAL
+SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
     INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (1, (TO_DATE('17-12-2023 13:30', 'DD-MM-YYYY HH24:MI')), 100, (TO_DATE('17-12-2023 15:30', 'DD-MM-YYYY HH24:MI')), 'Make-up')
     INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (2, (TO_DATE('29-09-2023 09:00', 'DD-MM-YYYY HH24:MI')), 101, (TO_DATE('29-09-2023 10:00', 'DD-MM-YYYY HH24:MI')), 'Haircut')
     INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (3, (TO_DATE('01-08-2023 11:30', 'DD-MM-YYYY HH24:MI')), 102, (TO_DATE('01-08-2023 13:00', 'DD-MM-YYYY HH24:MI')), 'Manicure')
     INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (4, (TO_DATE('01-08-2023 10:30', 'DD-MM-YYYY HH24:MI')), 103, (TO_DATE('01-08-2023 11:15', 'DD-MM-YYYY HH24:MI')), 'Tattoo')
-    INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (5, (TO_DATE('09-07-2023 11:30', 'DD-MM-YYYY HH24:MI')), 104, (TO_DATE('09-07-2023 12:30', 'DD-MM-YYYY HH24:MI')), 'Tattoo')
-SELECT 1 FROM DUAL;
+    -- INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (5, (TO_DATE('09-07-2023 11:30', 'DD-MM-YYYY HH24:MI')), 104, (TO_DATE('09-07-2023 12:30', 'DD-MM-YYYY HH24:MI')), 'Tattoo')
+SELECT 1 FROM DUAL COMMIT;
 
 -- INSERT ALL
 --     INTO review(reviewID, reviewMessage, rating, appID, userID) VALUES (1, 'Awesome experience', 5, 1, 1)
