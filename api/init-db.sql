@@ -32,6 +32,7 @@ CREATE TABLE customer(
     customerName VARCHAR(100) NOT NULL,
     phoneNo VARCHAR(100),
     email VARCHAR(320) UNIQUE NOT NULL,
+    userPassword VARCHAR(320) NOT NULL,
     PRIMARY KEY(userID)
 );
 
@@ -63,6 +64,7 @@ CREATE TABLE administrator(
     email VARCHAR(320) UNIQUE NOT NULL,
     branchID INT NOT NULL,
     businessID INT NOT NULL,
+    adminPassword VARCHAR(320) NOT NULL,
     PRIMARY KEY (userID),
     UNIQUE (branchID, businessID),
     FOREIGN KEY (branchID, businessID) REFERENCES branch(branchID, businessID)
@@ -163,11 +165,11 @@ INSERT ALL
 SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
-    INTO customer (userID, customerName, phoneNo, email) VALUES (1, 'phillip chariot', '123-435-1239', 'philipchariot@gmail.com')
-    INTO customer (userID, customerName, phoneNo, email) VALUES (2, 'jared chinatown', '132-421-8123', 'jc@gmail.com')
-    INTO customer (userID, customerName, phoneNo, email) VALUES (3, 'alejandro mexico', '213-489-1293', 'am@gmail.com')
-    INTO customer (userID, customerName, phoneNo, email) VALUES (4, 'lipa dua', '213-423-4823', 'dualipa@gmail.com')
-    INTO customer (userID, customerName, phoneNo, email) VALUES (5, 'chess crackers', '123-483-9123', 'cc@gmail.com')
+    INTO customer (userID, customerName, phoneNo, email, userPassword) VALUES (1, 'phillip chariot', '123-435-1239', 'philipchariot@gmail.com', '1234567890')
+    INTO customer (userID, customerName, phoneNo, email, userPassword) VALUES (2, 'jared chinatown', '132-421-8123', 'jc@gmail.com', '1234567890')
+    INTO customer (userID, customerName, phoneNo, email, userPassword) VALUES (3, 'alejandro mexico', '213-489-1293', 'am@gmail.com', '1234567890')
+    INTO customer (userID, customerName, phoneNo, email, userPassword) VALUES (4, 'lipa dua', '213-423-4823', 'dualipa@gmail.com', '1234567890')
+    INTO customer (userID, customerName, phoneNo, email, userPassword) VALUES (5, 'chess crackers', '123-483-9123', 'cc@gmail.com', '1234567890')
 SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
@@ -179,11 +181,11 @@ INSERT ALL
 SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
-    INTO administrator (userID, adminName, phoneNo, email, branchID, businessID) VALUES (1, 'james Doe', '111-111-1118', 'jamesdoe@hotmail.com', 1, 1234)
-    INTO administrator (userID, adminName, phoneNo, email, branchID, businessID) VALUES (2, 'james cameron', '111-111-5222', 'jamescameron@outlook.com,' 1, 5678)
-    INTO administrator (userID, adminName, phoneNo, email, branchID, businessID) VALUES (3, 'james cordon', '111-222-3353', 'james_cordon@gmail.com', 1, 1057)
-    INTO administrator (userID, adminName, phoneNo, email, branchID, businessID) VALUES (4, 'james pepperoni', '222-333-6444', 'jamespepps@yahoo.com', 2, 1234)
-    INTO administrator (userID, adminName, phoneNo, email, branchID, businessID) VALUES (5, 'reginold leopold the fifth', '555-666-2777', 'regleothe5@regleo.com', 1, 8888)
+    INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (1, 'james Doe', '111-111-1118', 'jamesdoe@hotmail.com', 1, 1234, '1234567890')
+    INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (2, 'james cameron', '111-111-5222', 'jamescameron@outlook.com,' 1, 5678, '1234567890')
+    INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (3, 'james cordon', '111-222-3353', 'james_cordon@gmail.com', 1, 1057, '1234567890')
+    INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (4, 'james pepperoni', '222-333-6444', 'jamespepps@yahoo.com', 2, 1234, '1234567890')
+    INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (5, 'reginold leopold the fifth', '555-666-2777', 'regleothe5@regleo.com', 1, 8888, '1234567890')
 SELECT 1 FROM DUAL
 
 INSERT ALL
