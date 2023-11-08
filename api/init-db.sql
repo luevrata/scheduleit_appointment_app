@@ -217,7 +217,7 @@ INSERT ALL
     INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (2, (TO_DATE('29-09-2023 09:00', 'DD-MM-YYYY HH24:MI')), 101, (TO_DATE('29-09-2023 10:00', 'DD-MM-YYYY HH24:MI')), 'Haircut')
     INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (3, (TO_DATE('01-08-2023 11:30', 'DD-MM-YYYY HH24:MI')), 102, (TO_DATE('01-08-2023 13:00', 'DD-MM-YYYY HH24:MI')), 'Manicure')
     INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (4, (TO_DATE('01-08-2023 10:30', 'DD-MM-YYYY HH24:MI')), 103, (TO_DATE('01-08-2023 11:15', 'DD-MM-YYYY HH24:MI')), 'Tattoo')
-    -- INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (5, (TO_DATE('09-07-2023 11:30', 'DD-MM-YYYY HH24:MI')), 104, (TO_DATE('09-07-2023 12:30', 'DD-MM-YYYY HH24:MI')), 'Tattoo')
+    INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (5, (TO_DATE('09-07-2023 11:30', 'DD-MM-YYYY HH24:MI')), 104, (TO_DATE('09-07-2023 12:30', 'DD-MM-YYYY HH24:MI')), 'Tattoo')
 SELECT 1 FROM DUAL COMMIT;
 
 -- INSERT ALL
