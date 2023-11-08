@@ -1,15 +1,15 @@
-DROP TABLE specialist_timeslot_location;
-DROP TABLE appointment;
-DROP TABLE specialist_timeslot_customer;
-DROP TABLE user_payment_method;
+DROP TABLE review;
 DROP TABLE payment;
+DROP TABLE appointment;
+DROP TABLE specialist_timeslot_location;
+DROP TABLE specialist_timeslot_customer;
+DROP TABLE administrator;
+DROP TABLE user_payment_method;
+DROP TABLE branch;
+DROP TABLE customer;
 DROP TABLE specialist;
 DROP TABLE service;
 DROP TABLE business;
-DROP TABLE customer;
-DROP TABLE administrator;
-DROP TABLE branch;
-DROP TABLE review;
 
 CREATE TABLE specialist(
     specialistID INT PRIMARY KEY,
@@ -132,8 +132,10 @@ CREATE TABLE review(
     rating INT NOT NULL,
     userID INT NOT NULL,
     appID INT UNIQUE NOT NULL,
-    FOREIGN KEY (userID) REFERENCES customer(userID),
+    FOREIGN KEY (userID) REFERENCES customer(userID)
+        ON DELETE CASCADE,
     FOREIGN KEY (appID) REFERENCES appointment(appID)
+        ON DELETE CASCADE
 );
 
 -- INSERT INTO Review (reviewID, message, rate, appID, userID)
