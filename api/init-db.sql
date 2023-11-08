@@ -41,7 +41,55 @@ CREATE TABLE user_payment_method(
     method VARCHAR(50),
     PRIMARY KEY (userID, paymentDate),
     FOREIGN KEY (userID) REFERENCES customer(userID)
-    ON DELETE SET NULL
+        ON DELETE SET NULL
+);
+
+CREATE TABLE branch(
+    branchID INT,
+    businessID INT,
+    branchName VARCHAR(100) NOT NULL,
+    branchAddress VARCHAR(100),
+    phoneNo VARCHAR(100) NOT NULL,
+    email VARCHAR(320),
+    PRIMARY KEY (branchID, businessID),
+    FOREIGN KEY (businessID) REFERENCES business(businessID)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE administrator(
+    userID INT,
+    adminName VARCHAR(100) NOT NULL,
+    phoneNo VARCHAR(100) NOT NULL,
+    email VARCHAR(320) UNIQUE NOT NULL,
+    branchID INT NOT NULL,
+    businessID INT NOT NULL,
+    PRIMARY KEY (userID),
+    UNIQUE (branchID, businessID),
+    FOREIGN KEY (branchID, businessID) REFERENCES branch(branchID, businessID)
+            ON DELETE CASCADE
+);
+
+CREATE TABLE specialist_timeslot_customer(
+    specialistID INT,
+    startDate DATE,
+    userID INT NOT NULL,
+    PRIMARY KEY (specialistID, startDate),
+    FOREIGN KEY (specialistID) REFERENCES specialist(specialistID)
+        ON DELETE CASCADE,
+    FOREIGN KEY (userID) REFERENCES customer(userID)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE specialist_timeslot_location(
+    specialistID INT,
+    startDate DATE,
+    branchID INT NOT NULL,
+    businessID INT NOT NULL,
+    PRIMARY KEY (specialistID, startDate),
+    FOREIGN KEY (specialistID) REFERENCES specialist(specialistID)
+        ON DELETE CASCADE,
+    FOREIGN KEY (branchID, businessID) REFERENCES branch(branchID, businessID)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE appointment(
@@ -59,73 +107,7 @@ CREATE TABLE appointment(
         specialist_timeslot_location(specialistID, startDate)
             ON DELETE SET NULL,
     FOREIGN KEY (serviceName) REFERENCES service(serviceName)
-        ON DELETE SET NULL,
-    FOREIGN KEY (paymentID) REFERENCES payment(paymentID)
-        ON DELETE SET NULL,
-    FOREIGN KEY (reviewID) REFERENCES review(reviewID)
-);
-
-CREATE TABLE review(
-    reviewID INT PRIMARY KEY,
-    reviewMessage VARCHAR,
-    rating INT NOT NULL,
-    userID INT NOT NULL,
-    appID INT UNIQUE NOT NULL,
-    FOREIGN KEY (userID) REFERENCES customer(userID),
-    FOREIGN KEY (appID) REFERENCES appointment(appID)
-)
-CREATE TABLE specialist_timeslot_customer(
-    specialistID INT,
-    startDate DATE,
-    userID INT NOT NULL,
-    PRIMARY KEY (specialistID, startDate),
-    FOREIGN KEY (specialistID) REFERENCES specialist(specialistID)
-        ON DELETE CASCADE,
-    FOREIGN KEY (userID) REFERENCES customer(userID)
-        ON DELETE CASCADE
-);
-
-CREATE TABLE branch(
-    branchID INT,
-    businessID INT,
-    branchName VARCHAR(100) NOT NULL,
-    branchAddress VARCHAR(100),
-    phoneNo VARCHAR(100) NOT NULL,
-    email VARCHAR(320),
-    userID INT NOT NULL UNIQUE,
-    PRIMARY KEY (branchID, businessID),
-    FOREIGN KEY (businessID) REFERENCES business(businessID)
-            ON DELETE CASCADE,
-    FOREIGN KEY (userID) REFERENCES administrator(userID)
-            ON DELETE SET NULL
-);
-
-CREATE TABLE administrator(
-    userID INT,
-    adminName VARCHAR(100) NOT NULL,
-    phoneNo VARCHAR(100) NOT NULL,
-    email VARCHAR(320) UNIQUE NOT NULL,
-    branchID INT NOT NULL,
-    businessID INT NOT NULL,
-    PRIMARY KEY (userID),
-    UNIQUE (branchID, businessID),
-    FOREIGN KEY (branchID) REFERENCES branch(branchID)
-            ON DELETE CASCADE,
-    FOREIGN KEY (businessID) REFERENCES business(businessID)
-            ON DELETE CASCADE
-);
-
-
-CREATE TABLE specialist_timeslot_location(
-    specialistID INT,
-    startDate DATE,
-    branchID INT NOT NULL,
-    businessID INT NOT NULL,
-    PRIMARY KEY (specialistID, startDate),
-    FOREIGN KEY (specialistID) REFERENCES specialist(specialistID)
-        ON DELETE CASCADE,
-    FOREIGN KEY (branchID, businessID) REFERENCES branch(branchID, businessID)
-        ON DELETE CASCADE
+        ON DELETE SET NULL
 );
 
 CREATE TABLE payment(
@@ -134,7 +116,7 @@ CREATE TABLE payment(
     price DECIMAL(10, 2),
     paymentDate DATE,
     userID INT NOT NULL,
-    appID INT NOT NULL,
+    appID INT NOT NULL UNIQUE,
     FOREIGN KEY (userID, paymentDate)
     REFERENCES user_payment_method(userID, paymentDate)
         ON DELETE SET NULL,
@@ -142,6 +124,16 @@ CREATE TABLE payment(
         ON DELETE SET NULL,
     FOREIGN KEY (appID) REFERENCES appointment(appID)
         ON DELETE SET NULL
+);
+
+CREATE TABLE review(
+    reviewID INT PRIMARY KEY,
+    reviewMessage VARCHAR(320),
+    rating INT NOT NULL,
+    userID INT NOT NULL,
+    appID INT UNIQUE NOT NULL,
+    FOREIGN KEY (userID) REFERENCES customer(userID),
+    FOREIGN KEY (appID) REFERENCES appointment(appID)
 );
 
 -- INSERT INTO Review (reviewID, message, rate, appID, userID)
