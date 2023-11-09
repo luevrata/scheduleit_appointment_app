@@ -1,0 +1,13 @@
+# environment
+.env
+
+# start file
+local-start.sh
+
+# packages
+package.json
+
+# dependencies
+/node_modules
+
+.idea
