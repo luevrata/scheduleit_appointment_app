@@ -1,5 +1,5 @@
 # environment
-.env
+**.env
 
 # start file
 local-start.sh
@@ -9,5 +9,3 @@ package.json
 
 # dependencies
 /node_modules
-
-.idea

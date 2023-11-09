@@ -26,5 +26,4 @@ router.get('/get-business/:bid', async (req, res) => {
     res.json({data: tableContent});
 });
 
-
 module.exports = router;
