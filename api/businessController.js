@@ -20,7 +20,7 @@ router.get('/get-businesses', async (req, res) => {
     res.json({data: tableContent});
 });
 
-router.get('/get-business-byId/:bid', async (req, res) => {
+router.get('/get-business/:bid', async (req, res) => {
     const businessId = req.params["bid"];
     const tableContent = await businessService.getBusinessByID(businessId) ;
     res.json({data: tableContent});
