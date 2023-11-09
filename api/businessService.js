@@ -44,36 +44,58 @@ async function testOracleConnection() {
     });
 }
 
-async function fetchDemotableFromDb() {
+async function getBusinesses() {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM DEMOTABLE');
+        const result = await connection.execute('SELECT * FROM BUSINESSES');
         return result.rows;
     }).catch(() => {
         return [];
     });
 }
 
-async function initiateDemotable() {
+async function getBusinessByID(id) {
     return await withOracleDB(async (connection) => {
-        try {
-            await connection.execute(`DROP TABLE DEMOTABLE`);
-        } catch(err) {
-            console.log('Table might not exist, proceeding to create...');
-        }
-
-        const result = await connection.execute(`
-            CREATE TABLE DEMOTABLE (
-                id NUMBER PRIMARY KEY,
-                name VARCHAR2(20)
-            )
-        `);
-        return true;
+        const result = await connection.execute('SELECT * FROM BUSINESSES WHERE ID=:id',
+        [id],
+        { autoCommit: true });
+        return result.rows;
     }).catch(() => {
-        return false;
+        return [];
     });
 }
 
-async function insertDemotable(id, name) {
+async function getBranches(businessID) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM BRANCHES WHERE businessID =:businessID',
+        [businessID],
+        { autoCommit: true });
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
+// async function initiateDemotable() {
+//     return await withOracleDB(async (connection) => {
+//         try {
+//             await connection.execute(`DROP TABLE DEMOTABLE`);
+//         } catch(err) {
+//             console.log('Table might not exist, proceeding to create...');
+//         }
+
+//         const result = await connection.execute(`
+//             CREATE TABLE DEMOTABLE (
+//                 id NUMBER PRIMARY KEY,
+//                 name VARCHAR2(20)
+//             )
+//         `);
+//         return true;
+//     }).catch(() => {
+//         return false;
+//     });
+// }
+
+async function addNewBusiness(id, name) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
             `INSERT INTO DEMOTABLE (id, name) VALUES (:id, :name)`,
@@ -112,9 +134,8 @@ async function countDemotable() {
 
 module.exports = {
     testOracleConnection,
-    fetchDemotableFromDb,
-    initiateDemotable, 
-    insertDemotable, 
+    getBusinesses,
+    addNewBusiness
     updateNameDemotable, 
     countDemotable
 };

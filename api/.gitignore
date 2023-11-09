@@ -1,5 +1,5 @@
 # environment
-.env
+**.env
 
 # start file
 local-start.sh
