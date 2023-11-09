@@ -217,21 +217,21 @@ INSERT ALL
     INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (2, (TO_DATE('29-09-2023 09:00', 'DD-MM-YYYY HH24:MI')), 101, (TO_DATE('29-09-2023 10:00', 'DD-MM-YYYY HH24:MI')), 'Haircut')
     INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (3, (TO_DATE('01-08-2023 11:30', 'DD-MM-YYYY HH24:MI')), 102, (TO_DATE('01-08-2023 13:00', 'DD-MM-YYYY HH24:MI')), 'Manicure')
     INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (4, (TO_DATE('01-08-2023 10:30', 'DD-MM-YYYY HH24:MI')), 103, (TO_DATE('01-08-2023 11:15', 'DD-MM-YYYY HH24:MI')), 'Tattoo')
-    INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (5, (TO_DATE('09-07-2023 11:30', 'DD-MM-YYYY HH24:MI')), 104, (TO_DATE('09-07-2023 12:30', 'DD-MM-YYYY HH24:MI')), 'Tattoo')
+    INTO appointment (appID, startDate, specialistID, endDate, serviceName) VALUES (5, (TO_DATE('09-07-2023 11:30', 'DD-MM-YYYY HH24:MI')), 103, (TO_DATE('09-07-2023 12:30', 'DD-MM-YYYY HH24:MI')), 'Tattoo')
 SELECT 1 FROM DUAL COMMIT;
 
--- INSERT ALL
---     INTO review(reviewID, reviewMessage, rating, appID, userID) VALUES (1, 'Awesome experience', 5, 1, 1)
---     INTO review(reviewID, reviewMessage, rating, appID, userID) VALUES (2, 'Not awesome experience', 3, 2, 2)
---     INTO review(reviewID, reviewMessage, rating, appID, userID) VALUES (3, 'Liked this salon', 4, 3, 1)
---     INTO review(reviewID, reviewMessage, rating, appID, userID) VALUES (4, 'Will not come back', 2, 4, 4)
---     INTO review(reviewID, reviewMessage, rating, appID, userID) VALUES (5, 'Not satisfied', 2, 5, 5)
--- SELECT 1 FROM DUAL;
+INSERT ALL
+    INTO review (reviewID, reviewMessage, rating, appID, userID) VALUES (1, 'Awesome experience', 5, 1, 1)
+    INTO review (reviewID, reviewMessage, rating, appID, userID) VALUES (2, 'Not awesome experience', 3, 2, 2)
+    INTO review (reviewID, reviewMessage, rating, appID, userID) VALUES (3, 'Liked this salon', 4, 3, 1)
+    INTO review (reviewID, reviewMessage, rating, appID, userID) VALUES (4, 'Will not come back', 2, 4, 4)
+    INTO review (reviewID, reviewMessage, rating, appID, userID) VALUES (5, 'Not satisfied', 2, 5, 5)
+SELECT 1 FROM DUAL;
 
--- INSERT ALL
---     INTO payment(paymentID, isPaid, price, paymentDate, userID, appID) VALUES (1, 1, 70.25, (TO_DATE('17-12-2023 13:30', 'DD-MM-YYYY HH24:MI')),  1, 1)
---     INTO payment(paymentID, isPaid, price, paymentDate, userID, appID) VALUES (2, 1, 30.00, (TO_DATE('29-09-2023 09:00', 'DD-MM-YYYY HH24:MI')),  2, 2)
---     INTO payment(paymentID, isPaid, price, paymentDate, userID, appID) VALUES (3, 1, 180.50, (TO_DATE('01-08-2023 11:30', 'DD-MM-YYYY HH24:MI')), 1, 3)
---     INTO payment(paymentID, isPaid, price, paymentDate, userID, appID) VALUES (4, 0, 200.09, (TO_DATE('03/08/2023 10:30', 'DD-MM-YYYY HH24:MI')), 4, 4)
---     INTO payment(paymentID, isPaid, price, paymentDate, userID, appID) VALUES (5, 1, 401.02, (TO_DATE('11/07/2023 11:30', 'DD-MM-YYYY HH24:MI')), 5, 5)
--- SELECT 1 FROM DUAL;
+INSERT ALL
+    INTO payment (paymentID, isPaid, price, paymentDate, userID, appID) VALUES (1, 1, 70.25, (TO_DATE('17-12-2023 14:38', 'DD-MM-YYYY HH24:MI')),  1, 1)
+    INTO payment (paymentID, isPaid, price, paymentDate, userID, appID) VALUES (2, 1, 30.00, (TO_DATE('29-09-2023 10:02', 'DD-MM-YYYY HH24:MI')),  2, 2)
+    INTO payment (paymentID, isPaid, price, paymentDate, userID, appID) VALUES (3, 1, 180.50, (TO_DATE('01-08-2023 12:32', 'DD-MM-YYYY HH24:MI')), 1, 3)
+    INTO payment (paymentID, isPaid, price, paymentDate, userID, appID) VALUES (4, 0, 200.09, (TO_DATE('03/08/2023 10:30', 'DD-MM-YYYY HH24:MI')), 4, 4)
+    INTO payment (paymentID, isPaid, price, paymentDate, userID, appID) VALUES (5, 1, 401.02, (TO_DATE('11/07/2023 14:11', 'DD-MM-YYYY HH24:MI')), 5, 5)
+SELECT 1 FROM DUAL;
