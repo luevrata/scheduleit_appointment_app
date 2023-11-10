@@ -35,7 +35,7 @@ router.get('/customer/appointments/:customerID', async (req, res) => {
 
 router.get("/customer/auth/:email/:password/:customerID", async (req, res) => {
     const tableContent = await appService.getCustomerEmailAndPass(parseInt(req.params["customerID"]));
-    const authUser = authenticateUser(req.params.email, req.params.password, tableContent)
+    const authUser = appService.authenticateUser(req.params["email"], req.params["password"], tableContent);
     if (authUser) {
         res.json({ success: true });
     } else {
@@ -45,8 +45,9 @@ router.get("/customer/auth/:email/:password/:customerID", async (req, res) => {
 
 // thinking about adding a feature where IDs for customer, business, specialist, and service are auto generated
 // If we do this then don't need customerID in here
-router.post("/customer/add/:customerID/:customerName/:phoneNo/:email/:userPassword ", async (req, res) => {
-    const addCustomer = await appService.addNewCustomer(parseInt(req.params["customerID"]), req.params["customerName"], req.params["phoneNo"], req.params["email"], req.params["userPassword"]);
+router.post("/customer/add", async (req, res) => {
+    const {id, name, phone, email, pass} = req.body;
+    const addCustomer = await appService.addNewCustomer(id, name, phone, email, pass);
     if (addCustomer) {
         res.json({ success: true });
     } else {
@@ -71,7 +72,7 @@ router.get('/admin/id/:adminID', async (req, res) => {
 
 router.get("/admin/auth/:email/:password/:adminID", async (req, res) => {
     const tableContent = await appService.getAdminEmailAndPass(parseInt(req.params["adminID"]));
-    const authUser = authenticateUser(req.params.email, req.params.password, tableContent)
+    const authUser = appService.authenticateUser(req.params["email"], req.params["password"], tableContent);
     if (authUser) {
         res.json({ success: true });
     } else {
@@ -81,8 +82,9 @@ router.get("/admin/auth/:email/:password/:adminID", async (req, res) => {
 
 // same comment as before for customer. 
 // should add an endpoint to get branch and business IDs too so that we don't need to keep track of them manually
-router.post("/admin/add/:adminID/:adminName/:phoneNo/:email/:branchID/:businessID/:adminPassword", async (req, res) => {
-    const addCustomer = await appService.addNewCustomer(parseInt(req.params["adminID"]), req.params["adminName"], req.params["phoneNo"], req.params["email"], req.params["branchID"], req.params["businessID"], req.params["adminPassword"]);
+router.post("/admin/add", async (req, res) => {
+    const {id, name, phone, email, branchID, businessID, pass} = req.body;
+    const addCustomer = await appService.addNewAdmin(id, name, phone, email, branchID, businessID, pass);
     if (addCustomer) {
         res.json({ success: true });
     } else {

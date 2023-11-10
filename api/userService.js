@@ -83,8 +83,9 @@ async function getCustomerEmailAndPass(userID) {
 }
 
  function authenticateUser(email, password, user) {
-    if (len(user) == 1) {
-        if (user.email == email && user.password == password) {
+    if (user.length == 1) {
+
+        if (user[0][0] == email && user[0][1] == password) {
             return true
         } 
         return false
@@ -101,9 +102,12 @@ async function getCustomerEmailAndPass(userID) {
 async function getAllAppointmentsForCustomer(userID) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `SELECT a.appID, c.userID, stl.branchID
-             FROM appointment a, specialist_timeslot_customer stc, specialist_timeslot_location stl, customer c 
-             WHERE a.startDate = stc.startDate and a.specialistID = stc.specialistID and stc.userID = :userID`,
+            'SELECT c.customername, a.serviceName, sp.specialistname, a.startDate, a.endDate, b.businessName, br.branchAddress\n' +
+            'FROM specialist_timeslot_customer stc, specialist_timeslot_location stl, appointment a, customer c, business b, branch br, specialist sp\n' +
+            'WHERE stc.specialistID = stl.specialistID AND stc.startDate = stl.startDate \n' +
+            'AND stl.specialistID = a.specialistID AND stl.startDate = a.startDate\n' +
+            'AND stc.userID = c.userID AND stl.businessID = br.businessID\n' +
+            'AND stl.branchID = br.branchID AND br.businessID = b.businessID AND a.specialistID = sp.specialistID AND stc.userID = :userID',
             [userID]
         );
         return result.rows;
@@ -144,7 +148,7 @@ async function getAdminEmailAndPass(adminID) {
 async function getAdminByEmail(email) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            'SELECT * FROM administrator WHERE userID = :email',
+            'SELECT * FROM administrator WHERE email = :email',
             [email]
         );
         return result.rows;
