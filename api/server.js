@@ -1,5 +1,4 @@
 const express = require('express');
-const appController = require('./appController');
 const businessController = require('./businessController.js');
 
 // Load environment variables from .env file
@@ -23,7 +22,7 @@ app.use(express.json());             // Parse incoming JSON payloads
 
 
 // mount the router
-app.use('/', appController);
+// app.use('/', appController);
 app.use('/business', businessController);
 
 // ----------------------------------------------------------

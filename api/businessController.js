@@ -2,6 +2,9 @@ const express = require('express');
 const businessService = require('./businessService');
 
 const router = express.Router();
+const cors = require('cors');
+
+router.use(cors());
 
 // ----------------------------------------------------------
 // API endpoints
@@ -17,7 +20,15 @@ router.get('/check-db-connection', async (req, res) => {
 
 router.get('/get-businesses', async (req, res) => {
     const tableContent = await businessService.getBusinesses();
-    res.json({data: tableContent});
+    const transformedData = tableContent.map(business => {
+        return {
+            id: business[0],
+            name: business[1],
+            // Add more fields as needed
+        };
+    });
+
+    res.json({ data: transformedData });
 });
 
 router.get('/get-business/:bid', async (req, res) => {
