@@ -1,5 +1,5 @@
 const express = require('express');
-const appService = require('./userService');
+const userService = require('./userService');
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ const router = express.Router();
 
 // ***** CUSTOMER USER *****
 router.get('/check-db-connection', async (req, res) => {
-    const isConnect = await appService.testOracleConnection();
+    const isConnect = await userService.testOracleConnection();
     if (isConnect) {
         res.send('connected');
     } else {
@@ -18,24 +18,24 @@ router.get('/check-db-connection', async (req, res) => {
 });
 
 router.get('/customer/email/:email', async (req, res) => {
-    const tableContent = await appService.getCustomerByEmail(req.params["email"]);
+    const tableContent = await userService.getCustomerByEmail(req.params["email"]);
     res.json({data: tableContent});
 });
 
 router.get('/customer/id/:customerID', async (req, res) => {
 
-    const tableContent = await appService.getCustomerById(parseInt(req.params["customerID"]));
+    const tableContent = await userService.getCustomerById(parseInt(req.params["customerID"]));
     res.json({data: tableContent});
 });
 
 router.get('/customer/appointments/:customerID', async (req, res) => {
-    const tableContent = await appService.getAllAppointmentsForCustomer(parseInt(req.params["customerID"]));
+    const tableContent = await userService.getAllAppointmentsForCustomer(parseInt(req.params["customerID"]));
     res.json({data: tableContent});
 });
 
 router.get("/customer/auth/:email/:password/:customerID", async (req, res) => {
-    const tableContent = await appService.getCustomerEmailAndPass(parseInt(req.params["customerID"]));
-    const authUser = appService.authenticateUser(req.params["email"], req.params["password"], tableContent);
+    const tableContent = await userService.getCustomerEmailAndPass(parseInt(req.params["customerID"]));
+    const authUser = userService.authenticateUser(req.params["email"], req.params["password"], tableContent);
     if (authUser) {
         res.json({ success: true });
     } else {
@@ -47,7 +47,7 @@ router.get("/customer/auth/:email/:password/:customerID", async (req, res) => {
 // If we do this then don't need customerID in here
 router.post("/customer/add", async (req, res) => {
     const {id, name, phone, email, pass} = req.body;
-    const addCustomer = await appService.addNewCustomer(id, name, phone, email, pass);
+    const addCustomer = await userService.addNewCustomer(id, name, phone, email, pass);
     if (addCustomer) {
         res.json({ success: true });
     } else {
@@ -59,20 +59,20 @@ router.post("/customer/add", async (req, res) => {
 // ***** ADMIN USER *****
 
 router.get('/admin/email/:email', async (req, res) => {
-    const tableContent = await appService.getAdminByEmail(req.params["email"]);
+    const tableContent = await userService.getAdminByEmail(req.params["email"]);
     res.json({data: tableContent});
 });
 
 router.get('/admin/id/:adminID', async (req, res) => {
-    const tableContent = await appService.getAdminById(req.params["adminID"]);
+    const tableContent = await userService.getAdminById(req.params["adminID"]);
     res.json({data: tableContent});
 });
 
 
 
 router.get("/admin/auth/:email/:password/:adminID", async (req, res) => {
-    const tableContent = await appService.getAdminEmailAndPass(parseInt(req.params["adminID"]));
-    const authUser = appService.authenticateUser(req.params["email"], req.params["password"], tableContent);
+    const tableContent = await userService.getAdminEmailAndPass(parseInt(req.params["adminID"]));
+    const authUser = userService.authenticateUser(req.params["email"], req.params["password"], tableContent);
     if (authUser) {
         res.json({ success: true });
     } else {
@@ -80,11 +80,11 @@ router.get("/admin/auth/:email/:password/:adminID", async (req, res) => {
     }
 });
 
-// same comment as before for customer. 
+// same comment as before for customer.
 // should add an endpoint to get branch and business IDs too so that we don't need to keep track of them manually
 router.post("/admin/add", async (req, res) => {
     const {id, name, phone, email, branchID, businessID, pass} = req.body;
-    const addCustomer = await appService.addNewAdmin(id, name, phone, email, branchID, businessID, pass);
+    const addCustomer = await userService.addNewAdmin(id, name, phone, email, branchID, businessID, pass);
     if (addCustomer) {
         res.json({ success: true });
     } else {
