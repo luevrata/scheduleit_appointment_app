@@ -1,9 +1,8 @@
 const express = require('express');
 const businessService = require('./businessService');
-
-const router = express.Router();
 const cors = require('cors');
 
+const router = express.Router();
 router.use(cors());
 
 // ----------------------------------------------------------

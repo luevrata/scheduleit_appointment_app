@@ -1,14 +1,13 @@
 import { Typography, Box, Avatar, Button } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { useGetBusinesses } from "../requests/business";
-import {
-  filledButtonStyle,
-  outlinedButtonStyle,
-  textButtonStyle,
-} from "../styles/commonStyles";
+import { filledButtonStyle, textButtonStyle } from "../styles/commonStyles";
+import { useNavigate } from "react-router-dom";
 const LandingPage: React.FC = () => {
   const { data: businessesData, isLoading: isBusinessesDataLoading } =
     useGetBusinesses();
+
+  const navigate = useNavigate();
 
   return (
     <div
@@ -49,8 +48,7 @@ const LandingPage: React.FC = () => {
             <Button
               variant="text"
               sx={textButtonStyle}
-              //TODO: UNCOMMENT WHEN IMPLEMENTING LOGIN
-              // onClick={() => navigate("/login")}
+              onClick={() => navigate("/login")}
             >
               Log In
             </Button>

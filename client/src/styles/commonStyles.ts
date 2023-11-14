@@ -23,8 +23,23 @@ export const filledButtonStyle: CSSObject = {
   height: "50px",
   boxShadow: "none",
   "&:hover": {
-    backgroundColor: "#488afa",
+    backgroundColor: "var(--color-blue1)",
     borderRadius: "32px",
     boxShadow: "none",
+  },
+};
+
+export const textFieldStyle: CSSObject = {
+  backgroundColor: "white",
+  "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+    borderWidth: 3,
+    borderColor: "var(--color-blue1)",
+  },
+  "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: "var(--color-blue1)",
+  },
+  "& .MuiInputLabel-root.Mui-focused ": { color: "var(--color-blue1)" },
+  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "var(--color-blue1)",
   },
 };
