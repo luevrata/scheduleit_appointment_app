@@ -182,11 +182,15 @@ SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (1, 'james Doe', '111-111-1118', 'jamesdoe@hotmail.com', 1, 1234, '1234567890')
+<<<<<<< HEAD
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (2, 'james cameron', '111-111-5222', 'jamescameron@outlook.com,', 1, 5678, '1234567890')
+=======
+    INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (2, 'james cameron', '111-111-5222', 'jamescameron@outlook.com', 1, 5678, '1234567890')
+>>>>>>> main
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (3, 'james cordon', '111-222-3353', 'james_cordon@gmail.com', 1, 1057, '1234567890')
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (4, 'james pepperoni', '222-333-6444', 'jamespepps@yahoo.com', 2, 1234, '1234567890')
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (5, 'reginold leopold the fifth', '555-666-2777', 'regleothe5@regleo.com', 1, 8888, '1234567890')
-SELECT 1 FROM DUAL
+SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
     INTO specialist_timeslot_location (startDate, specialistID, branchID, businessID) VALUES ((TO_DATE('17-12-2023 13:30', 'DD-MM-YYYY HH24:MI')), 100, 1, 8888)
@@ -226,7 +230,7 @@ INSERT ALL
     INTO review (reviewID, reviewMessage, rating, appID, userID) VALUES (3, 'Liked this salon', 4, 3, 1)
     INTO review (reviewID, reviewMessage, rating, appID, userID) VALUES (4, 'Will not come back', 2, 4, 4)
     INTO review (reviewID, reviewMessage, rating, appID, userID) VALUES (5, 'Not satisfied', 2, 5, 5)
-SELECT 1 FROM DUAL;
+SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
     INTO payment (paymentID, isPaid, price, paymentDate, userID, appID) VALUES (1, 1, 70.25, (TO_DATE('17-12-2023 14:38', 'DD-MM-YYYY HH24:MI')),  1, 1)
@@ -234,4 +238,6 @@ INSERT ALL
     INTO payment (paymentID, isPaid, price, paymentDate, userID, appID) VALUES (3, 1, 180.50, (TO_DATE('01-08-2023 12:32', 'DD-MM-YYYY HH24:MI')), 1, 3)
     INTO payment (paymentID, isPaid, price, paymentDate, userID, appID) VALUES (4, 0, 200.09, (TO_DATE('03/08/2023 10:30', 'DD-MM-YYYY HH24:MI')), 4, 4)
     INTO payment (paymentID, isPaid, price, paymentDate, userID, appID) VALUES (5, 1, 401.02, (TO_DATE('11/07/2023 14:11', 'DD-MM-YYYY HH24:MI')), 5, 5)
-SELECT 1 FROM DUAL;
+SELECT 1 FROM DUAL COMMIT;
+
+COMMIT;
