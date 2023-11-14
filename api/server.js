@@ -1,4 +1,5 @@
 const express = require('express');
+const appController = require('./appController');
 const businessController = require('./businessController.js');
 const userController = require('./userController');
 
@@ -23,7 +24,7 @@ app.use(express.json());             // Parse incoming JSON payloads
 
 
 // mount the router
-// app.use('/', appController);
+app.use('/', appController);
 app.use('/business', businessController);
 app.use('/user', userController);
 

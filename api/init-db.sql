@@ -182,11 +182,7 @@ SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (1, 'james Doe', '111-111-1118', 'jamesdoe@hotmail.com', 1, 1234, '1234567890')
-<<<<<<< HEAD
-    INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (2, 'james cameron', '111-111-5222', 'jamescameron@outlook.com,', 1, 5678, '1234567890')
-=======
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (2, 'james cameron', '111-111-5222', 'jamescameron@outlook.com', 1, 5678, '1234567890')
->>>>>>> main
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (3, 'james cordon', '111-222-3353', 'james_cordon@gmail.com', 1, 1057, '1234567890')
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (4, 'james pepperoni', '222-333-6444', 'jamespepps@yahoo.com', 2, 1234, '1234567890')
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (5, 'reginold leopold the fifth', '555-666-2777', 'regleothe5@regleo.com', 1, 8888, '1234567890')
