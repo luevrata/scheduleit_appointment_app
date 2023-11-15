@@ -48,19 +48,19 @@ async function getBusinesses() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute('SELECT * FROM BUSINESS');
         return result.rows;
-    }).catch(() => {
-        return [];
+    }).catch((e) => {
+        return (e);
     });
 }
 
 async function getBusinessByID(id) {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM BUSINESS WHERE businessID=:id',
+        const result = await connection.execute('SELECT * FROM BUSINESS WHERE businessID=iddsfafef3232',
             [id],
             { autoCommit: true });
         return result.rows;
-    }).catch(() => {
-        return [];
+    }).catch((e) => {
+        return(e);
     });
 }
 

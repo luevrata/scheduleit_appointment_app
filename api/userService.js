@@ -70,6 +70,7 @@ async function getCustomerById(userID) {
     });
 }
 
+//TODO REMOVE
 async function getCustomerEmailAndPass(userID) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
@@ -82,19 +83,22 @@ async function getCustomerEmailAndPass(userID) {
     });
 }
 
- function authenticateUser(email, password, user) {
-    if (user.length == 1) {
-
-        if (user[0][0] == email && user[0][1] == password) {
-            return true
-        } 
-        return false
-    } else if (len(user) < 1) {
-        throw new Error('received no users to authenticate')
-    } else {
-        throw new Error('received > 1 user, should not be possible')
-    }
-    
+ async function authenticateUser(email, password) {
+     return await withOracleDB(async (connection) => {
+         const userPassword = await connection.execute(
+             'SELECT userPassword FROM customer WHERE email = :email',
+             [email]
+         );
+         if (userPassword.rows.length===1) {
+             return password === userPassword.rows[0][0];
+         } else if (userPassword.rows.length < 1) {
+             throw new Error('received no users to authenticate');
+         } else {
+             throw new Error('received > 1 user, should not be possible');
+         }
+     }).catch((e) => {
+         return false;
+     });
 }
 
 // gets all appointments related to a customer using userID
@@ -152,8 +156,8 @@ async function getAdminByEmail(email) {
             [email]
         );
         return result.rows;
-    }).catch(() => {
-        return [];
+    }).catch((e) => {
+        return (e);
     });
 }
 

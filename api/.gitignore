@@ -2,10 +2,10 @@
 **.env
 
 # start file
-local-start.sh
+/local-start.sh
 
 # packages
-package.json
+/package-lock.json
 
 # dependencies
 /node_modules

@@ -1,8 +1,9 @@
 const express = require('express');
 const userService = require('./userService');
+const cors = require('cors');
 
 const router = express.Router();
-
+router.use(cors())
 // ----------------------------------------------------------
 // API endpoints
 // Modify or extend these routes based on your project's needs.
@@ -33,9 +34,9 @@ router.get('/customer/appointments/:customerID', async (req, res) => {
     res.json({data: tableContent});
 });
 
-router.get("/customer/auth/:email/:password/:customerID", async (req, res) => {
-    const tableContent = await userService.getCustomerEmailAndPass(parseInt(req.params["customerID"]));
-    const authUser = userService.authenticateUser(req.params["email"], req.params["password"], tableContent);
+router.post("/customer/auth", async (req, res) => {
+    const {email, password } = req.body;
+    const authUser = await  userService.authenticateUser(email, password);
     if (authUser) {
         res.json({ success: true });
     } else {
