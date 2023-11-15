@@ -55,8 +55,7 @@ const LandingPage: React.FC = () => {
             <Button
               variant="contained"
               sx={filledButtonStyle}
-              //TODO: UNCOMMENT WHEN IMPLEMENTING LOGIN
-              // onClick={() => navigate("/signup")}
+              onClick={() => navigate("/signup")}
             >
               Sign Up
             </Button>
@@ -105,7 +104,7 @@ const LandingPage: React.FC = () => {
               }}
             >
               {!isBusinessesDataLoading &&
-                businessesData.data.map((business, index) => (
+                businessesData.data?.map((business, index) => (
                   <Box
                     key={index}
                     sx={{
