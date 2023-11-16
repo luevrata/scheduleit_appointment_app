@@ -107,17 +107,6 @@ async function updateAvailability(startDate, endDate, specialistID, businessID, 
     });
 }
 
-async function getBusinessByID(id) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM BUSINESS WHERE businessID=:id',
-            [id],
-            { autoCommit: true });
-        return result.rows;
-    }).catch((e) => {
-        return(e);
-    });
-}
-
 
 module.exports = {
     testOracleConnection,

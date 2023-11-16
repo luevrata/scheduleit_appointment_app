@@ -35,6 +35,7 @@ router.get('/get-timeslots/:businessID/:branchID/:specialistID', async (req, res
     });
 
     const tm= new TimeslotManager();
+    //todo make duration flexible
     const timeslots = await tm.getTimeslots(60, transformedData);
     res.json({ data: timeslots});
 });
@@ -49,13 +50,5 @@ router.post('/update-availability', async (req, res) => {
 
     res.json({ data: availraw});
 });
-router.post("/customer/auth", async (req, res) => {
-    const {email, password } = req.body;
-    const authUser = await  userService.authenticateUser(email, password);
-    if (authUser) {
-        res.json({ success: true });
-    } else {
-        res.status(500).json({ success: false });
-    }
-});
+
 module.exports = router;
