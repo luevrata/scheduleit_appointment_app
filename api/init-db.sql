@@ -8,6 +8,7 @@ DROP TABLE user_payment_method;
 DROP TABLE branch;
 DROP TABLE customer;
 DROP TABLE specialist;
+DROP TABLE availability;
 DROP TABLE service;
 DROP TABLE business;
 
@@ -16,6 +17,19 @@ CREATE TABLE specialist(
     email VARCHAR(320) NOT NULL UNIQUE,
     rating DECIMAL(2,1),
     specialistName VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE availability(
+   specialistID INT,
+   startDate DATE,
+   endDate DATE,
+   businessID INT NOT NULL,
+   branchID INT NOT NULL,
+   PRIMARY KEY (specialistID, startDate),
+   FOREIGN KEY (specialistID) REFERENCES specialist(specialistID)
+       ON DELETE CASCADE,
+   FOREIGN KEY (branchID, businessID) REFERENCES branch(branchID, businessID)
+       ON DELETE CASCADE
 );
 
 CREATE TABLE service(
@@ -234,6 +248,14 @@ INSERT ALL
     INTO payment (paymentID, isPaid, price, paymentDate, userID, appID) VALUES (3, 1, 180.50, (TO_DATE('01-08-2023 12:32', 'DD-MM-YYYY HH24:MI')), 1, 3)
     INTO payment (paymentID, isPaid, price, paymentDate, userID, appID) VALUES (4, 0, 200.09, (TO_DATE('03/08/2023 10:30', 'DD-MM-YYYY HH24:MI')), 4, 4)
     INTO payment (paymentID, isPaid, price, paymentDate, userID, appID) VALUES (5, 1, 401.02, (TO_DATE('11/07/2023 14:11', 'DD-MM-YYYY HH24:MI')), 5, 5)
+SELECT 1 FROM DUAL COMMIT;
+
+INSERT ALL
+    INTO availability (startDate, endDate, specialistID, branchID, businessID) VALUES ((TO_DATE('17-12-2024 10:00', 'DD-MM-YYYY HH24:MI')), (TO_DATE('17-12-2024 17:30', 'DD-MM-YYYY HH24:MI')), 100, 1, 8888)
+    INTO availability (startDate, endDate, specialistID, branchID, businessID) VALUES ((TO_DATE('29-09-2024 09:00', 'DD-MM-YYYY HH24:MI')), (TO_DATE('29-09-2024 18:00', 'DD-MM-YYYY HH24:MI')), 101, 1, 1057)
+    INTO availability (startDate, endDate, specialistID, branchID, businessID) VALUES ((TO_DATE('01-08-2024 11:00', 'DD-MM-YYYY HH24:MI')), (TO_DATE('01-08-2024 18:30', 'DD-MM-YYYY HH24:MI')), 102, 1, 1234)
+    INTO availability (startDate, endDate, specialistID, branchID, businessID) VALUES ((TO_DATE('01-08-2024 9:30', 'DD-MM-YYYY HH24:MI')), (TO_DATE('01-08-2024 17:30', 'DD-MM-YYYY HH24:MI')), 103, 2, 1234)
+    INTO availability (startDate, endDate, specialistID, branchID, businessID) VALUES ((TO_DATE('09-07-2024 10:30', 'DD-MM-YYYY HH24:MI')), (TO_DATE('09-07-2024 18:30', 'DD-MM-YYYY HH24:MI')), 103, 1, 5678)
 SELECT 1 FROM DUAL COMMIT;
 
 COMMIT;

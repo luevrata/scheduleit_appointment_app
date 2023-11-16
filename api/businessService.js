@@ -55,7 +55,7 @@ async function getBusinesses() {
 
 async function getBusinessByID(id) {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM BUSINESS WHERE businessID=iddsfafef3232',
+        const result = await connection.execute('SELECT * FROM BUSINESS WHERE businessID=:id',
             [id],
             { autoCommit: true });
         return result.rows;
