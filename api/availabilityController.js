@@ -44,20 +44,10 @@ router.post('/update-availability', async (req, res) => {
     const tableContent = await availabilityService.updateAvailability(startDate, endDate, specialistID, businessID, branchID);
 
     const availraw = await availabilityService.getAvailabilities(businessID, branchID, specialistID);
-    // const transformedData = availraw.map(avail=> {
-    //     return {
-    //         startDate: avail[0],
-    //         endDate: avail[1],
-    //         specialistID:avail[2],
-    //         businessID: avail[3],
-    //         branchID: avail[4],
-    //     };
-    // });
     //todo create appointment
 
-    // res.json({ data: transformedData});
 
-    res.json({ data: tableContent});
+    res.json({ data: availraw});
 });
 router.post("/customer/auth", async (req, res) => {
     const {email, password } = req.body;

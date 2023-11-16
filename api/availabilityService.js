@@ -73,23 +73,31 @@ async function updateAvailability(startDate, endDate, specialistID, businessID, 
         const tm= new TimeslotManager();
         const newAvailabilities = await tm.bookTimeslot(startDate, endDate, availabilities);
 
-        return newAvailabilities;
-
         for (const newAvail of newAvailabilities) {
             for (const actualAvail of availabilities) {
+
                 if (newAvail.startDate===actualAvail.startDate){
+                    const specialistID = actualAvail.specialistID;
+                    const startDate = actualAvail.startDate;
                     await connection.execute(
-                        'DELETE FROM AVAILABILITY WHERE startDate=:startDate',
-                        [actualAvail.startDate]
+                        'DELETE FROM AVAILABILITY WHERE specialistID=:specialistID AND startDate=:startDate',
+                        [specialistID, startDate],
+                        { autoCommit: true }
                     );
                     break;
                 }
             }
         }
         for (const newAvail of newAvailabilities) {
-            const result = await connection.execute(
-                `INSERT INTO availability (startDate, endDate, specialistID, businessID, branchID) VALUES ((TO_DATE(:startDate, 'DD-MM-YYYY HH24:MI')), (TO_DATE(:endDate, 'DD-MM-YYYY HH24:MI')), :specialistID, :businessID, :branchID)`,
-                [newAvail.startDate, newAvail.endDate, newAvail.specialistID, newAvail.businessID, newAvail.branchID],
+            const specialistID = newAvail.specialistID;
+            const startDate = new Date(newAvail.startDate);
+            const endDate= new Date(newAvail.endDate);
+            const branchID = newAvail.branchID;
+            const businessID = newAvail.businessID;
+
+            await connection.execute(
+                'INSERT INTO AVAILABILITY (startDate, endDate, specialistID, businessID, branchID) VALUES (:startdate, :endDate, :specialistID, :businessID, :branchID)',
+                [startDate, endDate, specialistID, businessID, branchID],
                 { autoCommit: true }
             );
         }

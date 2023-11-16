@@ -13,7 +13,9 @@ class TimeSlotManager {
                 branchID: availability.branchID,
             };
 
-            result.push(currentAvailability);
+            if (currentEndTime<= new Date(availability.endDate)) {
+                result.push(currentAvailability);
+            }
             currentStartTime = currentEndTime;
         }
 
@@ -33,11 +35,17 @@ class TimeSlotManager {
 
     async bookTimeslot(startTime, endTime, availabilities) {
         for (const availability of availabilities) {
-            if (startTime >= new Date(availability.startDate) && endTime <= new Date(availability.endDate)) {
+            const startTimeDate = new Date(startTime);
+            const availStartDate = new Date(availability.startDate);
+            const endTimeDate = new Date(endTime);
+            const availEndDate = new Date(availability.endDate);
+
+            if (startTimeDate >= availStartDate && endTimeDate <= availEndDate) {
                 const changedAvailabilities = [];
 
+
                 // Case 1: If timeslot takes time in the beginning of availability
-                if (startTime.getTime() === new Date(availability.startDate).getTime()) {
+                if (startTimeDate.getTime() === new Date(availability.startDate).getTime()) {
                     const secondPartAvailability = {
                         startDate: endTime,
                         endDate: availability.endDate,
@@ -48,7 +56,7 @@ class TimeSlotManager {
                     changedAvailabilities.push(secondPartAvailability);
                 } else
                     // Case 2: If timeslot takes time in the end of availability
-                if (endTime.getTime() === new Date(availability.endDate).getTime()) {
+                if (endTimeDate.getTime() === new Date(availability.endDate).getTime()) {
                     const firstPartAvailability = {
                         startDate: availability.startDate,
                         endDate: startTime,
