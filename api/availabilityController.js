@@ -3,6 +3,7 @@ const availabilityService = require('./availabilityService');
 const cors = require('cors');
 const TimeslotManager = require("./controller/TimeslotManager.js");
 const userService = require("./userService");
+const serviceService = require("./serviceService")
 
 const router = express.Router();
 router.use(cors());
@@ -19,10 +20,11 @@ router.get('/check-db-connection', async (req, res) => {
     }
 });
 
-router.get('/get-timeslots/:businessID/:branchID/:specialistID', async (req, res) => {
+router.get('/get-timeslots/:businessID/:branchID/:specialistID/:serviceName', async (req, res) => {
     const businessId = req.params["businessID"];
     const branchId = req.params["branchID"];
     const specialistId = req.params["specialistID"];
+    const serviceName = req.params["serviceName"];
     const tableContent = await availabilityService.getAvailabilities(businessId, branchId, specialistId);
     const transformedData = tableContent.map(avail=> {
         return {
@@ -35,8 +37,9 @@ router.get('/get-timeslots/:businessID/:branchID/:specialistID', async (req, res
     });
 
     const tm= new TimeslotManager();
+    const duration = await serviceService.getDuration(serviceName)
     //todo make duration flexible
-    const timeslots = await tm.getTimeslots(60, transformedData);
+    const timeslots = await tm.getTimeslots(duration, transformedData);
     res.json({ data: timeslots});
 });
 

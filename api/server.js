@@ -3,6 +3,7 @@ const appController = require('./appController');
 const businessController = require('./businessController.js');
 const userController = require('./userController');
 const availabilityController = require('./availabilityController');
+const serviceController = require('./serviceController');
 
 // Load environment variables from .env file
 // Ensure your .env file has the required database credentials.
@@ -28,7 +29,9 @@ app.use(express.json());             // Parse incoming JSON payloads
 app.use('/', appController);
 app.use('/business', businessController);
 app.use('/user', userController);
-app.use('/availability', availabilityController)
+app.use('/availability', availabilityController);
+app.use('/service', serviceController)
+
 
 // ----------------------------------------------------------
 // Starting the server

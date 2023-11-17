@@ -8,9 +8,11 @@ DROP TABLE administrator;
 DROP TABLE user_payment_method;
 DROP TABLE branch;
 DROP TABLE customer;
+DROP TABLE provides;
 DROP TABLE specialist;
 DROP TABLE service;
 DROP TABLE business;
+
 
 CREATE TABLE specialist(
     specialistID INT PRIMARY KEY,
@@ -20,7 +22,9 @@ CREATE TABLE specialist(
 );
 
 CREATE TABLE service(
-    serviceName VARCHAR(100) PRIMARY KEY
+    serviceName VARCHAR(100) PRIMARY KEY,
+    price INT,
+    duration INT
 );
 
 CREATE TABLE business(
@@ -95,6 +99,16 @@ CREATE TABLE specialist_timeslot_location(
         ON DELETE CASCADE
 );
 
+CREATE TABLE provides(
+    specialistID INT,
+    serviceName VARCHAR(100),
+    PRIMARY KEY (specialistID, serviceName),
+    FOREIGN KEY (specialistID) REFERENCES specialist(specialistID)
+        ON DELETE CASCADE,
+    FOREIGN KEY (serviceName) REFERENCES service(serviceName)
+        ON DELETE SET NULL
+);
+
 CREATE TABLE availability(
     startDate DATE,
     endDate DATE,
@@ -164,11 +178,21 @@ INSERT ALL
 SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
-    INTO service (serviceName) VALUES ('Manicure')
-    INTO service (serviceName) VALUES ('Tattoo')
-    INTO service (serviceName) VALUES ('Physiotherapy')
-    INTO service (serviceName) VALUES ('Haircut')
-    INTO service (serviceName) VALUES ('Make-up')
+    INTO service (serviceName, price, duration) VALUES ('Manicure', 10, 30)
+    INTO service (serviceName, price, duration) VALUES ('Tattoo', 200, 120)
+    INTO service (serviceName, price, duration) VALUES ('Physiotherapy', 150, 60)
+    INTO service (serviceName, price, duration) VALUES ('Haircut', 10, 30)
+    INTO service (serviceName, price, duration) VALUES ('Make-up', 60, 75)
+SELECT 1 FROM DUAL COMMIT;
+
+INSERT ALL
+    INTO provides (specialistID, serviceName) VALUES (100, 'Haircut')
+    INTO provides (specialistID, serviceName) VALUES (100, 'Make-up')
+    INTO provides (specialistID, serviceName) VALUES (101, 'Manicure')
+    INTO provides (specialistID, serviceName) VALUES (102, 'Physiotherapy')
+    INTO provides (specialistID, serviceName) VALUES (103, 'Tattoo')
+    INTO provides (specialistID, serviceName) VALUES (103, 'Haircut')
+    INTO provides (specialistID, serviceName) VALUES (104, 'Tattoo')
 SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
