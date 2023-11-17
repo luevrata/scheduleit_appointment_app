@@ -49,7 +49,7 @@ async function getBusinesses() {
         const result = await connection.execute('SELECT * FROM BUSINESS');
         return result.rows;
     }).catch((e) => {
-        return (e);
+        throw e;
     });
 }
 

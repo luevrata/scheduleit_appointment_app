@@ -5,6 +5,7 @@ import App from "./App.tsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const defaultQueryClientOptions = {
@@ -19,6 +20,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
     </Router>
   </QueryClientProvider>,

@@ -47,7 +47,8 @@ router.post("/customer/auth", async (req, res) => {
 // thinking about adding a feature where IDs for customer, business, specialist, and service are auto generated
 // If we do this then don't need customerID in here
 router.post("/customer/add", async (req, res) => {
-    const {id, name, phone, email, pass} = req.body;
+    const {name, phone, email, pass} = req.body;
+    const id = Date.now();
     const addCustomer = await userService.addNewCustomer(id, name, phone, email, pass);
     if (addCustomer) {
         res.json({ success: true });
