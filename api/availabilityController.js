@@ -40,13 +40,12 @@ router.get('/get-timeslots/:businessID/:branchID/:specialistID', async (req, res
     res.json({ data: timeslots});
 });
 
-router.post('/update-availability', async (req, res) => {
+router.post('/book-appointment', async (req, res) => {
     const {startDate, endDate, specialistID, businessID, branchID} = req.body;
     const tableContent = await availabilityService.updateAvailability(startDate, endDate, specialistID, businessID, branchID);
 
     const availraw = await availabilityService.getAvailabilities(businessID, branchID, specialistID);
     //todo create appointment
-
 
     res.json({ data: availraw});
 });

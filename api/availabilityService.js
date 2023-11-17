@@ -94,16 +94,17 @@ async function updateAvailability(startDate, endDate, specialistID, businessID, 
             const endDate= new Date(newAvail.endDate);
             const branchID = newAvail.branchID;
             const businessID = newAvail.businessID;
-
-            await connection.execute(
-                'INSERT INTO AVAILABILITY (startDate, endDate, specialistID, businessID, branchID) VALUES (:startdate, :endDate, :specialistID, :businessID, :branchID)',
-                [startDate, endDate, specialistID, businessID, branchID],
-                { autoCommit: true }
-            );
+            if (startDate!==endDate) {
+                await connection.execute(
+                    'INSERT INTO AVAILABILITY (startDate, endDate, specialistID, businessID, branchID) VALUES (:startdate, :endDate, :specialistID, :businessID, :branchID)',
+                    [startDate, endDate, specialistID, businessID, branchID],
+                    {autoCommit: true}
+                );
+            }
         }
 
     }).catch((e) => {
-        return false;
+        return (e);
     });
 }
 
