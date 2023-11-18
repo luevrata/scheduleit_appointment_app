@@ -1,11 +1,15 @@
 import { Typography, Box, Avatar, Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useGetBusinesses } from "../requests/business";
 import { filledButtonStyle, textButtonStyle } from "../styles/commonStyles";
 import { useNavigate } from "react-router-dom";
+import { useGetCustomerInfo } from "../requests/users";
 const LandingPage: React.FC = () => {
   const { data: businessesData, isLoading: isBusinessesDataLoading } =
     useGetBusinesses();
+
+  const { data: customerData, isLoading: isCustomerDataLoading } =
+    useGetCustomerInfo() as { data: any; isLoading: boolean };
 
   const navigate = useNavigate();
 
@@ -45,20 +49,62 @@ const LandingPage: React.FC = () => {
             ScheduleIT
           </Typography>
           <Box>
-            <Button
-              variant="text"
-              sx={textButtonStyle}
-              onClick={() => navigate("/login")}
-            >
-              Log In
-            </Button>
-            <Button
-              variant="contained"
-              sx={filledButtonStyle}
-              onClick={() => navigate("/signup")}
-            >
-              Sign Up
-            </Button>
+            {!isCustomerDataLoading && !customerData?.data?.valid && (
+              <>
+                <Button
+                  variant="text"
+                  sx={textButtonStyle}
+                  onClick={() => navigate("/login")}
+                >
+                  Log In
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={filledButtonStyle}
+                  onClick={() => navigate("/signup")}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
+            {!isCustomerDataLoading && !customerData?.data?.valid && (
+              <>
+                <Button
+                  variant="text"
+                  sx={textButtonStyle}
+                  onClick={() => navigate("/login")}
+                >
+                  Log In
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={filledButtonStyle}
+                  onClick={() => navigate("/signup")}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
+            {!isCustomerDataLoading && customerData?.data?.valid && (
+              <>
+                <Button
+                  variant="text"
+                  sx={textButtonStyle}
+                  //todo implement later
+                  // onClick={() => navigate("/signup")}
+                >
+                  Log Out
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={filledButtonStyle}
+                  //todo implement later
+                  // onClick={() => navigate("/signup")}
+                >
+                  Appointments
+                </Button>
+              </>
+            )}
           </Box>
         </Box>
       </div>

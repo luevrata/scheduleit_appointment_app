@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { filledButtonStyle, textFieldStyle } from "../styles/commonStyles";
 import { usePostLoginUser } from "../requests/users";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -9,12 +10,18 @@ const LoginPage = () => {
   const { mutateAsync: loginUserMutation } = usePostLoginUser();
   const [errorMessage, setErrorMessage] = useState("");
 
+  const navigate = useNavigate();
+
   const handleLogin = async () => {
     try {
       const response = await loginUserMutation({
         email: email,
         password: password,
       });
+
+      if (response.success) {
+        navigate("/");
+      }
 
       // Clear any previous error message
       setErrorMessage("");
