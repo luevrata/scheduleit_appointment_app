@@ -67,24 +67,6 @@ const LandingPage: React.FC = () => {
                 </Button>
               </>
             )}
-            {!isCustomerDataLoading && !customerData?.data?.valid && (
-              <>
-                <Button
-                  variant="text"
-                  sx={textButtonStyle}
-                  onClick={() => navigate("/login")}
-                >
-                  Log In
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={filledButtonStyle}
-                  onClick={() => navigate("/signup")}
-                >
-                  Sign Up
-                </Button>
-              </>
-            )}
             {!isCustomerDataLoading && customerData?.data?.valid && (
               <>
                 <Button
