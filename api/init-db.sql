@@ -1,15 +1,18 @@
 DROP TABLE review;
 DROP TABLE payment;
 DROP TABLE appointment;
+DROP TABLE availability;
 DROP TABLE specialist_timeslot_location;
 DROP TABLE specialist_timeslot_customer;
 DROP TABLE administrator;
 DROP TABLE user_payment_method;
 DROP TABLE branch;
 DROP TABLE customer;
+DROP TABLE provides;
 DROP TABLE specialist;
 DROP TABLE service;
 DROP TABLE business;
+
 
 CREATE TABLE specialist(
     specialistID INT PRIMARY KEY,
@@ -19,7 +22,9 @@ CREATE TABLE specialist(
 );
 
 CREATE TABLE service(
-    serviceName VARCHAR(100) PRIMARY KEY
+    serviceName VARCHAR(100) PRIMARY KEY,
+    price INT,
+    duration INT
 );
 
 CREATE TABLE business(
@@ -54,7 +59,7 @@ CREATE TABLE branch(
     email VARCHAR(320),
     PRIMARY KEY (branchID, businessID),
     FOREIGN KEY (businessID) REFERENCES business(businessID)
-        ON DELETE CASCADE
+       ON DELETE CASCADE
 );
 
 CREATE TABLE administrator(
@@ -68,7 +73,7 @@ CREATE TABLE administrator(
     PRIMARY KEY (userID),
     UNIQUE (branchID, businessID),
     FOREIGN KEY (branchID, businessID) REFERENCES branch(branchID, businessID)
-            ON DELETE CASCADE
+      ON DELETE CASCADE
 );
 
 CREATE TABLE specialist_timeslot_customer(
@@ -94,6 +99,29 @@ CREATE TABLE specialist_timeslot_location(
         ON DELETE CASCADE
 );
 
+CREATE TABLE provides(
+    specialistID INT,
+    serviceName VARCHAR(100),
+    PRIMARY KEY (specialistID, serviceName),
+    FOREIGN KEY (specialistID) REFERENCES specialist(specialistID)
+        ON DELETE CASCADE,
+    FOREIGN KEY (serviceName) REFERENCES service(serviceName)
+        ON DELETE SET NULL
+);
+
+CREATE TABLE availability(
+    startDate DATE,
+    endDate DATE,
+    specialistID INT,
+    businessID INT NOT NULL,
+    branchID INT NOT NULL,
+    PRIMARY KEY (specialistID, startDate),
+    FOREIGN KEY (specialistID) REFERENCES specialist(specialistID)
+        ON DELETE CASCADE,
+    FOREIGN KEY (branchID, businessID) REFERENCES branch(branchID, businessID)
+        ON DELETE CASCADE
+);
+
 CREATE TABLE appointment(
     appID INT PRIMARY KEY,
     startDate DATE NOT NULL,
@@ -103,9 +131,9 @@ CREATE TABLE appointment(
     UNIQUE(specialistID, startDate),
     FOREIGN KEY (specialistID) REFERENCES specialist(specialistID)
         ON DELETE CASCADE,
-    FOREIGN KEY (specialistID, startDate) REFERENCES 
+    FOREIGN KEY (specialistID, startDate) REFERENCES
         specialist_timeslot_location(specialistID, startDate)
-            ON DELETE SET NULL,
+        ON DELETE SET NULL,
     FOREIGN KEY (serviceName) REFERENCES service(serviceName)
         ON DELETE SET NULL
 );
@@ -118,7 +146,7 @@ CREATE TABLE payment(
     userID INT NOT NULL,
     appID INT NOT NULL UNIQUE,
     FOREIGN KEY (userID, paymentDate)
-    REFERENCES user_payment_method(userID, paymentDate)
+        REFERENCES user_payment_method(userID, paymentDate)
         ON DELETE SET NULL,
     FOREIGN KEY (userID) REFERENCES customer(userID)
         ON DELETE SET NULL,
@@ -127,16 +155,17 @@ CREATE TABLE payment(
 );
 
 CREATE TABLE review(
-    reviewID INT PRIMARY KEY,
-    reviewMessage VARCHAR(320),
-    rating FLOAT NOT NULL,
-    userID INT NOT NULL,
-    appID INT UNIQUE NOT NULL,
-    FOREIGN KEY (userID) REFERENCES customer(userID)
-        ON DELETE CASCADE,
-    FOREIGN KEY (appID) REFERENCES appointment(appID)
-        ON DELETE CASCADE
+   reviewID INT PRIMARY KEY,
+   reviewMessage VARCHAR(320),
+   rating FLOAT NOT NULL,
+   userID INT NOT NULL,
+   appID INT UNIQUE NOT NULL,
+   FOREIGN KEY (userID) REFERENCES customer(userID)
+       ON DELETE CASCADE,
+   FOREIGN KEY (appID) REFERENCES appointment(appID)
+       ON DELETE CASCADE
 );
+
 
 -- ********** INSERT STATEMENTS **********
 
@@ -149,13 +178,23 @@ INSERT ALL
 SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
-    INTO service (serviceName) VALUES ('Manicure')
-    INTO service (serviceName) VALUES ('Tattoo')
-    INTO service (serviceName) VALUES ('Physiotherapy')
-    INTO service (serviceName) VALUES ('Haircut')
-    INTO service (serviceName) VALUES ('Make-up')
+    INTO service (serviceName, price, duration) VALUES ('Manicure', 10, 30)
+    INTO service (serviceName, price, duration) VALUES ('Tattoo', 200, 120)
+    INTO service (serviceName, price, duration) VALUES ('Physiotherapy', 150, 60)
+    INTO service (serviceName, price, duration) VALUES ('Haircut', 10, 30)
+    INTO service (serviceName, price, duration) VALUES ('Make-up', 60, 75)
 SELECT 1 FROM DUAL COMMIT;
-    
+
+INSERT ALL
+    INTO provides (specialistID, serviceName) VALUES (100, 'Haircut')
+    INTO provides (specialistID, serviceName) VALUES (100, 'Make-up')
+    INTO provides (specialistID, serviceName) VALUES (101, 'Manicure')
+    INTO provides (specialistID, serviceName) VALUES (102, 'Physiotherapy')
+    INTO provides (specialistID, serviceName) VALUES (103, 'Tattoo')
+    INTO provides (specialistID, serviceName) VALUES (103, 'Haircut')
+    INTO provides (specialistID, serviceName) VALUES (104, 'Tattoo')
+SELECT 1 FROM DUAL COMMIT;
+
 INSERT ALL
     INTO business (businessID, businessName) VALUES (1234, 'ACME Salon')
     INTO business (businessID, businessName) VALUES (5678, 'Inkwell Tattoo Shop')
@@ -173,10 +212,10 @@ INSERT ALL
 SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL
-    INTO branch (branchID, businessID, branchName, branchAddress, phoneNo, email) VALUES  (1, 1234, 'East Vancouver ACME Salon', '215 Tolmie St', '123-456-7899', 'Eastvanacme@gmail.com') 
+    INTO branch (branchID, businessID, branchName, branchAddress, phoneNo, email) VALUES  (1, 1234, 'East Vancouver ACME Salon', '215 Tolmie St', '123-456-7899', 'Eastvanacme@gmail.com')
     INTO branch (branchID, businessID, branchName, branchAddress, phoneNo, email) VALUES  (2, 1234, 'Inkwell oakville', '210 North Service Rd W', '101-112-1314', 'oakville@inkwell.com')
-    INTO branch (branchID, businessID, branchName, branchAddress, phoneNo, email) VALUES  (1, 1057, 'The Barber Shop LLoydmaster', '5612 44 St', '123-543-5673', 'thebarbershop@gmail.com' ) 
-    INTO branch (branchID, businessID, branchName, branchAddress, phoneNo, email) VALUES  (1, 5678, 'Smile Thai Kelowna', '1567 Pandosy St', '341-435-1235', 'Smilethaikelowna@yahoo.com') 
+    INTO branch (branchID, businessID, branchName, branchAddress, phoneNo, email) VALUES  (1, 1057, 'The Barber Shop LLoydmaster', '5612 44 St', '123-543-5673', 'thebarbershop@gmail.com' )
+    INTO branch (branchID, businessID, branchName, branchAddress, phoneNo, email) VALUES  (1, 5678, 'Smile Thai Kelowna', '1567 Pandosy St', '341-435-1235', 'Smilethaikelowna@yahoo.com')
     INTO branch (branchID, businessID, branchName, branchAddress, phoneNo, email) VALUES  (1, 8888, 'Sephora Bromont', '229 de Bromont Boul', '214-543-5673', 'sephora@bromont.com')
 SELECT 1 FROM DUAL COMMIT;
 
@@ -186,6 +225,14 @@ INSERT ALL
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (3, 'james cordon', '111-222-3353', 'james_cordon@gmail.com', 1, 1057, '1234567890')
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (4, 'james pepperoni', '222-333-6444', 'jamespepps@yahoo.com', 2, 1234, '1234567890')
     INTO administrator (userID, adminName, phoneNo, email, branchID, businessID, adminPassword) VALUES (5, 'reginold leopold the fifth', '555-666-2777', 'regleothe5@regleo.com', 1, 8888, '1234567890')
+SELECT 1 FROM DUAL COMMIT;
+
+INSERT ALL
+    INTO availability (startDate, endDate, specialistID, businessID, branchID) VALUES ((TO_DATE('17-12-2024 10:00', 'DD-MM-YYYY HH24:MI')), (TO_DATE('17-12-2024 17:30', 'DD-MM-YYYY HH24:MI')), 100, 8888, 1)
+    INTO availability (startDate, endDate, specialistID, businessID, branchID) VALUES ((TO_DATE('29-09-2024 09:00', 'DD-MM-YYYY HH24:MI')), (TO_DATE('29-09-2024 18:00', 'DD-MM-YYYY HH24:MI')), 101, 1057, 1)
+    INTO availability (startDate, endDate, specialistID, businessID, branchID) VALUES ((TO_DATE('01-08-2024 11:00', 'DD-MM-YYYY HH24:MI')), (TO_DATE('01-08-2024 18:30', 'DD-MM-YYYY HH24:MI')), 102, 1234, 1)
+    INTO availability (startDate, endDate, specialistID, businessID, branchID) VALUES ((TO_DATE('01-08-2024 9:30', 'DD-MM-YYYY HH24:MI')), (TO_DATE('01-08-2024 17:30', 'DD-MM-YYYY HH24:MI')), 103, 1234, 2)
+    INTO availability (startDate, endDate, specialistID, businessID, branchID) VALUES ((TO_DATE('09-07-2024 10:30', 'DD-MM-YYYY HH24:MI')), (TO_DATE('09-07-2024 18:30', 'DD-MM-YYYY HH24:MI')), 103, 5678, 1)
 SELECT 1 FROM DUAL COMMIT;
 
 INSERT ALL

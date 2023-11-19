@@ -44,29 +44,43 @@ async function testOracleConnection() {
     });
 }
 
-async function getBusinesses() {
+async function getServices() {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM BUSINESS');
+        const result = await connection.execute('SELECT * FROM SERVICE');
         return result.rows;
-    }).catch((e) => {
-        throw e;
+    }).catch(() => {
+        return [];
     });
 }
 
-async function getBusinessByID(id) {
+async function getServicesBySid(specialistID) {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM BUSINESS WHERE businessID=:id',
-            [id],
-            { autoCommit: true });
+        const result = await connection.execute('SELECT p.SPECIALISTID, s.SERVICENAME, s.PRICE, s.DURATION  FROM PROVIDES p, SERVICE s WHERE p.SERVICENAME = s.SERVICENAME AND p.SPECIALISTID = :speaclistID', [specialistID]);
         return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
+async function getDuration(serviceName) {
+    return await withOracleDB(async (connection) => {
+        const service = serviceName.toLowerCase();
+        const result = await connection.execute('SELECT DURATION FROM SERVICE WHERE LOWER(SERVICENAME) = :serviceName', [service]);
+
+        if (result.rows.length > 0 ) {
+            return result.rows[0][0];
+        } else {
+            return 0;
+        }
     }).catch((e) => {
-        return(e);
+        throw e;
     });
 }
 
 
 module.exports = {
     testOracleConnection,
-    getBusinesses,
-    getBusinessByID,
+    getServices,
+    getServicesBySid,
+    getDuration
 };
