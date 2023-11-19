@@ -60,13 +60,19 @@ async function getCustomerByEmail(email) {
 
 async function getCustomerById(userID) {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
+        const user = await connection.execute(
             'SELECT * FROM customer WHERE userID = :userID',
             [userID]
         );
-        return result.rows;
-    }).catch(() => {
-        return [];
+        const theUser = user.rows[0];
+        return {
+            userID: theUser[0],
+            customerName: theUser[1],
+            phoneNo: theUser[2],
+            email: theUser[3],
+        };
+    }).catch((e) => {
+        return (e);
     });
 }
 
@@ -85,19 +91,25 @@ async function getCustomerEmailAndPass(userID) {
 
  async function authenticateUser(email, password) {
      return await withOracleDB(async (connection) => {
-         const userPassword = await connection.execute(
-             'SELECT userPassword FROM customer WHERE email = :email',
-             [email]
+         const user = await connection.execute(
+             'SELECT * FROM customer WHERE email = :email AND userPassword=:password',
+             [email, password]
          );
-         if (userPassword.rows.length===1) {
-             return password === userPassword.rows[0][0];
-         } else if (userPassword.rows.length < 1) {
-             throw new Error('received no users to authenticate');
+         if (user.rows.length===1) {
+             const theUser = user.rows[0];
+             return {
+                 userID: theUser[0],
+                 customerName: theUser[1],
+                 phoneNo: theUser[2],
+                 email: theUser[3],
+             };
+         } else if (user.rows.length < 1) {
+             return new Error('received no users to authenticate');
          } else {
-             throw new Error('received > 1 user, should not be possible');
+             return new Error('received > 1 user, should not be possible');
          }
      }).catch((e) => {
-         return false;
+         return e;
      });
 }
 
