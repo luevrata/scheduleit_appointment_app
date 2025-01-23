@@ -5,4 +5,4 @@
 A Centralized Business Appointment Scheduling System. It is a platform with the ability to book, cancel and modify appointments; stores information about the customers, businesses, appointments, specialists, and other entities.
 
 
-Link to video presentation: https://drive.google.com/drive/folders/1RQBYRIBbCuFQ4UBs2EM4YHQ98esInI_o
+Link to video presentation: https://drive.google.com/file/d/1R5g2DOiN-w4ez5nrdjxyoT8Kbk4v5nuY/view?usp=drive_link
